@@ -6,7 +6,10 @@ namespace AMDT_Assessment.Common
 {
     public static class CommonMethods
     {
+        //Key
         public static string key = "abcefs@@fxsbdv@";
+
+        //Convert to Encrypt Password
         public static string CovertToEncrypt(string password)
         {
             if (string.IsNullOrEmpty(password)) return "";
@@ -15,6 +18,7 @@ namespace AMDT_Assessment.Common
             var passwordBytes = Encoding.UTF8.GetBytes(password);
             return Convert.ToBase64String(passwordBytes);
         }
+        //Convert to Decrypt Password
 
         public static string CovertToDecrypt(string base64EncodeData)
 

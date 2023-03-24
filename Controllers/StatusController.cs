@@ -1,4 +1,5 @@
 ﻿using AMDT_Assessment.Models;
+using AMDT_Assessment.Response;
 using AMDT_Assessment.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,55 +20,57 @@ namespace AMDT_Assessment.Controllers
                 _configuration = configuration;
 
             }
-
+        //Get All Status
             [HttpGet]
             [Route("GetAllStatus")]
-            public Response GetAllStatus()
+            public StatusResponse GetAllStatus()
             {
                 SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("UserManageCon").ToString());
-                Response response = new Response();
+            StatusResponse response = new StatusResponse();
             StatusService statusService = new StatusService();
                 response = statusService.GetAllStatus(connection);
                 return response;
             }
-
+        //Get Status By Id
             [HttpGet]
             [Route("GetStatusById/{id}")]
-            public Response GetStatusById(int id)
+            public StatusResponse GetStatusById(int id)
             {
                 SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("UserManageCon").ToString());
-                Response response = new Response();
+            StatusResponse response = new StatusResponse();
             StatusService statusService = new StatusService();
                 response = statusService.GetStatusById(connection, id);
                 return response;
             }
+        //Add Status
             [HttpPost]
             [Route("AddStatus")]
-            public Response AddStatus(Status status)
+            public StatusResponse AddStatus(Status status)
             {
                 SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("UserManageCon").ToString());
-                Response response = new Response();
+            StatusResponse response = new StatusResponse();
             StatusService statusService = new StatusService();
                 response = statusService.AddStatus(connection, status);
                 return response;
             }
+        //Update Status
             [HttpPut]
             [Route("UpdateStatus")]
-            public Response UpdateStatus(Status status, int id)
+            public StatusResponse UpdateStatus(Status status)
             {
                 SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("UserManageCon").ToString());
-                Response response = new Response();
+            StatusResponse response = new StatusResponse();
                 StatusService statusService = new StatusService();
                 response = statusService.UpdateStatus(connection, status);
                 return response;
             }
-
+        //Delete Status
             [HttpDelete]
             [Route("DeleteStatus")]
-            public Response DeleteStatus(int id)
+            public StatusResponse DeleteStatus(int id)
             {
                 SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("UserManageCon").ToString());
-                Response response = new Response();
+            StatusResponse response = new StatusResponse();
             StatusService statusService = new StatusService();
                 response = statusService.DeleteStatus(connection, id);
                 return response;
