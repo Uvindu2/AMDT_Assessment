@@ -1,4 +1,9 @@
-﻿using AMDT_Assessment.Models;
+﻿using AMDT_Assessment.Common;
+using AMDT_Assessment.Models;
+using AMDT_Assessment.Response;
+using AMDT_Assessment.Service;
+using JwtAuthDemo;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -18,81 +23,89 @@ namespace AMDT_Assessment.Controllers
             _configuration = configuration;
 
         }
-
+        //Get All Users
+        [Authorize]
         [HttpGet]
         [Route("GetAllUsers")]
-        public Response GetAllUsers()
+        
+        public UserResponse GetAllUsers()
         {
             SqlConnection connection=new SqlConnection(_configuration.GetConnectionString("UserManageCon").ToString());
-            Response response = new Response();
-            DAL dal= new DAL();
-            response=dal.GetAllUsers(connection);
+            UserResponse response = new UserResponse();
+            UserService userService= new UserService();
+            response=userService.GetAllUsers(connection);
             return response;
         }
-
+        //Get User By Id
         [HttpGet]
         [Route("GetUserById/{id}")]
-        public Response GetUserById(int id)
+        public UserResponse GetUserById(int id)
         {
             SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("UserManageCon").ToString());
-            Response response = new Response();
-            DAL dal = new DAL();
-            response = dal.GetUserById(connection,id);
+            UserResponse response = new UserResponse();
+            UserService userService = new UserService();
+            response = userService.GetUserById(connection,id);
             return response;
         }
 
-
+        //Get User Details By email
         [HttpGet]
         [Route("GetUserByEmail/{email}")]
-        public Response GetUserByEmail(string email)
+        public UserResponse GetUserByEmail(string email)
         {
             SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("UserManageCon").ToString());
-            Response response = new Response();
-            DAL dal = new DAL();
-            response = dal.GetUserByEmail(connection,email);
+            UserResponse response = new UserResponse();
+            UserService userService = new UserService();
+            response = userService.GetUserByEmail(connection,email);
             return response;
         }
-
+        //Add User
         [HttpPost]
         [Route("AddUser")]
-        public Response AddUser(User user)
+        public UserResponse AddUser(User user)
         {
             SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("UserManageCon").ToString());
-            Response response = new Response();
-            DAL dal = new DAL();
-            response = dal.AddUser(connection,user);
+            UserResponse response = new UserResponse();
+            UserService userService = new UserService();
+            response = userService.AddUser(connection,user);
             return response;
         }
+        //Update User
         [HttpPut]
         [Route("UpdateUser")]
-        public Response UpdateUser(User user,int id)
+        public UserResponse UpdateUser(User user)
         {
             SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("UserManageCon").ToString());
-            Response response = new Response();
-            DAL dal = new DAL();
-            response = dal.UpdateUser(connection, user);
+            UserResponse response = new UserResponse();
+            UserService userService = new UserService();
+            response = userService.UpdateUser(connection, user);
             return response;
         }
-
+        //Delete User
         [HttpDelete]
-        [Route("DeleteUser")]
-        public Response DeleteUser(int id)
+        [Route("DeleteUser/{id}")]
+        public UserResponse DeleteUser(int id)
         {
             SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("UserManageCon").ToString());
-            Response response = new Response();
-            DAL dal = new DAL();
-            response = dal.DeleteUser(connection, id);
+            UserResponse response = new UserResponse();
+            UserService userService = new UserService();
+            response = userService.DeleteUser(connection,id);
             return response;
         }
 
+        //User login
         [HttpPost]
         [Route("Login")]
-        public Response Login(Login login)
+        [AllowAnonymous]
+        public JwtAuthResponse Login(Login login)
         {
             SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("UserManageCon").ToString());
-            Response response = new Response();
-            DAL dal = new DAL();
-            response = dal.Login(connection,login);
+            JwtAuthResponse response = new JwtAuthResponse();
+            UserService userService = new UserService();
+            response = userService.Login(connection,login);
+
+        
+
             return response;
         }
 

@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
 using System;
+using Microsoft.AspNetCore.Mvc;
+using AMDT_Assessment.Response;
 
 namespace AMDT_Assessment.Service
 {
     public class StatusService
     {
-        public Response GetAllStatus(SqlConnection connection)
+        //Get All Status
+        public StatusResponse GetAllStatus(SqlConnection connection)
         {
-            Response response = new Response();
+            StatusResponse response = new StatusResponse();
             SqlDataAdapter da = new SqlDataAdapter("Select * from status", connection);
             DataTable dt = new DataTable();
             List<Status> listStatus = new List<Status>();
@@ -39,13 +42,16 @@ namespace AMDT_Assessment.Service
                 response.StatusMessage = "No Data Found";
                 response.listStatus = null;
             }
+
             return response;
+         
         }
 
 
-        public Response GetStatusById(SqlConnection connection, int id)
+        //Get All Status By Id
+        public StatusResponse GetStatusById(SqlConnection connection, int id)
         {
-            Response response = new Response();
+            StatusResponse response = new StatusResponse();
             SqlDataAdapter da = new SqlDataAdapter("Select * from status where StatusID='" + id + "'", connection);
             DataTable dt = new DataTable();
             Status Statuss = new Status();
@@ -74,10 +80,10 @@ namespace AMDT_Assessment.Service
             return response;
         }
 
-
-        public Response AddStatus(SqlConnection connection, Status status)
+        //Add Status
+        public StatusResponse AddStatus(SqlConnection connection, Status status)
         {
-            Response response = new Response();
+            StatusResponse response = new StatusResponse();
             SqlCommand cmd = new SqlCommand("INSERT into status(StatusName,CreatedAt,ModifiedAt)" +
                 " values('" + status.StatusName + "',GETDATE(),GETDATE())", connection);
             connection.Open();
@@ -101,10 +107,10 @@ namespace AMDT_Assessment.Service
             return response;
         }
 
-
-        public Response UpdateStatus(SqlConnection connection, Status status)
+        //Update Status
+        public StatusResponse UpdateStatus(SqlConnection connection, Status status)
         {
-            Response response = new Response();
+            StatusResponse response = new StatusResponse();
             SqlCommand cmd = new SqlCommand("Update status set StatusName='" + status.StatusName + "',CreatedAt=GETDATE(),ModifiedAt=GETDATE() where StatusID='" + status.StatusID + "'", connection);
             connection.Open();
             int i = cmd.ExecuteNonQuery();
@@ -128,11 +134,11 @@ namespace AMDT_Assessment.Service
             return response;
         }
 
-
-        public Response DeleteStatus(SqlConnection connection, int id)
+        //Delete Status
+        public StatusResponse DeleteStatus(SqlConnection connection, int id)
         {
-            Response response = new Response();
-            SqlCommand cmd = new SqlCommand("Delete from status where StatusID +'" + id + "'", connection);
+            StatusResponse response = new StatusResponse();
+            SqlCommand cmd = new SqlCommand("Delete from status where StatusID ='" + id + "'", connection);
             connection.Open();
             int i = cmd.ExecuteNonQuery();
             connection.Close();

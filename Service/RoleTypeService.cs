@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
 using System;
+using AMDT_Assessment.Response;
 
 namespace AMDT_Assessment.Service
 {
     public class RoleTypeService
     {
-        public Response GetAllRoleType(SqlConnection connection)
+        //Get all Rle Types
+        public RoleTypeResponse GetAllRoleType(SqlConnection connection)
         {
-            Response response = new Response();
+            RoleTypeResponse response = new RoleTypeResponse();
             SqlDataAdapter da = new SqlDataAdapter("Select * from RoleType", connection);
             DataTable dt = new DataTable();
             List<RoleType> listRoleType = new List<RoleType>();
@@ -43,9 +45,10 @@ namespace AMDT_Assessment.Service
             return response;
         }
 
-        public Response GetRoleTypeById(SqlConnection connection, int id)
+        //Get Role Type By Id
+        public RoleTypeResponse GetRoleTypeById(SqlConnection connection, int id)
         {
-            Response response = new Response();
+            RoleTypeResponse response = new RoleTypeResponse();
             SqlDataAdapter da = new SqlDataAdapter("Select * from RoleType where RoleID='" + id + "'", connection);
             DataTable dt = new DataTable();
             RoleType RoleTypes = new RoleType();
@@ -76,9 +79,10 @@ namespace AMDT_Assessment.Service
         }
 
 
-        public Response AddRoleType(SqlConnection connection, RoleType roleType)
+        //Add Role Type
+        public RoleTypeResponse AddRoleType(SqlConnection connection, RoleType roleType)
         {
-            Response response = new Response();
+            RoleTypeResponse response = new RoleTypeResponse();
             SqlCommand cmd = new SqlCommand("INSERT into RoleType(RoleName,Status,CreatedAt,ModifiedAt)" +
                 " values('" + roleType.RoleName + "','"+roleType.Status+"',GETDATE(),GETDATE())", connection);
             connection.Open();
@@ -97,14 +101,15 @@ namespace AMDT_Assessment.Service
             {
                 response.StatusCode = 100;
                 response.StatusMessage = "No data inserted";
-                response.status = null;
+                response.roleType = null;
             }
             return response;
         }
 
-        public Response UpdateRoleType(SqlConnection connection, RoleType roleType)
+        //Update Role Type
+        public RoleTypeResponse UpdateRoleType(SqlConnection connection, RoleType roleType)
         {
-            Response response = new Response();
+            RoleTypeResponse response = new RoleTypeResponse();
             SqlCommand cmd = new SqlCommand("Update RoleType set RoleName='" + roleType.RoleName + "',Status='"+roleType.Status+ "',CreatedAt=GETDATE(),ModifiedAt=GETDATE() where RoleID='" + roleType.RoleID + "'", connection);
             connection.Open();
             int i = cmd.ExecuteNonQuery();
@@ -128,10 +133,11 @@ namespace AMDT_Assessment.Service
             return response;
         }
 
-        public Response DeleteRoleType(SqlConnection connection, int id)
+        //Delate Role Type
+        public RoleTypeResponse DeleteRoleType(SqlConnection connection, int id)
         {
-            Response response = new Response();
-            SqlCommand cmd = new SqlCommand("Delete from RoleType where RoleID +'" + id + "'", connection);
+            RoleTypeResponse response = new RoleTypeResponse();
+            SqlCommand cmd = new SqlCommand("Delete from RoleType where RoleID ='" + id + "'", connection);
             connection.Open();
             int i = cmd.ExecuteNonQuery();
             connection.Close();

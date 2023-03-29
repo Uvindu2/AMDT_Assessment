@@ -1,4 +1,5 @@
 ﻿using AMDT_Assessment.Models;
+using AMDT_Assessment.Response;
 using AMDT_Assessment.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,54 +22,59 @@ namespace AMDT_Assessment.Controllers
 
             }
 
+        //Get All Role Types
             [HttpGet]
             [Route("GetAllRoleTypes")]
-            public Response GetAllRoleTypes()
+            public RoleTypeResponse GetAllRoleTypes()
             {
                 SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("UserManageCon").ToString());
-                Response response = new Response();
+            RoleTypeResponse response = new RoleTypeResponse();
             RoleTypeService roleTypeService = new RoleTypeService();
             response = roleTypeService.GetAllRoleType(connection);
                 return response;
             }
-
+        //Get Role Type By Id
             [HttpGet]
             [Route("GetRoleTypeById/{id}")]
-            public Response GetRoleTypeById(int id)
+            public RoleTypeResponse GetRoleTypeById(int id)
             {
                 SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("UserManageCon").ToString());
-                Response response = new Response();
+            RoleTypeResponse response = new RoleTypeResponse();
             RoleTypeService roleTypeService = new RoleTypeService();
                 response = roleTypeService.GetRoleTypeById(connection, id);
                 return response;
             }
+        //Add Role Type
             [HttpPost]
             [Route("AddRoleType")]
-            public Response AddRoleType(RoleType roleType)
+            public RoleTypeResponse AddRoleType(RoleType roleType)
             {
                 SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("UserManageCon").ToString());
-                Response response = new Response();
+            RoleTypeResponse response = new RoleTypeResponse();
                 RoleTypeService roleTypeService = new RoleTypeService();
                 response = roleTypeService.AddRoleType(connection, roleType);
                 return response;
             }
+
+        //Update Role Type
             [HttpPut]
             [Route("UpdateRoleType")]
-            public Response UpdateRoleType(RoleType roleType, int id)
+            public RoleTypeResponse UpdateRoleType(RoleType roleType)
             {
                 SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("UserManageCon").ToString());
-                Response response = new Response();
+            RoleTypeResponse response = new RoleTypeResponse();
             RoleTypeService roleTypeService = new RoleTypeService();
                 response = roleTypeService.UpdateRoleType(connection, roleType);
                 return response;
             }
 
+        //Delete Role Type
             [HttpDelete]
-            [Route("DeleteRoleType")]
-            public Response DeleteRoleType(int id)
+            [Route("DeleteRoleType/{id}")]
+            public RoleTypeResponse DeleteRoleType(int id)
             {
                 SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("UserManageCon").ToString());
-                Response response = new Response();
+            RoleTypeResponse response = new RoleTypeResponse();
             RoleTypeService roleTypeService = new RoleTypeService();
                 response = roleTypeService.DeleteRoleType(connection, id);
                 return response;
