@@ -265,7 +265,7 @@ namespace AMDT_Assessment.Service
                   {
                     new Claim(ClaimTypes.Email, login.Email)
                   }),
-                    Expires = DateTime.UtcNow.AddMinutes(10),
+                    Expires = DateTime.UtcNow.AddMinutes(60),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)
                 };
 

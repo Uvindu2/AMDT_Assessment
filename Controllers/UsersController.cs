@@ -12,6 +12,8 @@ using System.Data.SqlClient;
 
 namespace AMDT_Assessment.Controllers
 {
+   // [EnableCors("MyPolicy") ]
+
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -26,8 +28,8 @@ namespace AMDT_Assessment.Controllers
         //Get All Users
         [Authorize]
         [HttpGet]
-        [Route("GetAllUsers")]
-        
+
+        [Authorize]
         public UserResponse GetAllUsers()
         {
             SqlConnection connection=new SqlConnection(_configuration.GetConnectionString("UserManageCon").ToString());
@@ -37,8 +39,9 @@ namespace AMDT_Assessment.Controllers
             return response;
         }
         //Get User By Id
+        [Authorize]
         [HttpGet]
-        [Route("GetUserById/{id}")]
+        [Route("{id}")]
         public UserResponse GetUserById(int id)
         {
             SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("UserManageCon").ToString());
@@ -49,6 +52,8 @@ namespace AMDT_Assessment.Controllers
         }
 
         //Get User Details By email
+        [Authorize]
+
         [HttpGet]
         [Route("GetUserByEmail/{email}")]
         public UserResponse GetUserByEmail(string email)
@@ -60,8 +65,9 @@ namespace AMDT_Assessment.Controllers
             return response;
         }
         //Add User
+        
         [HttpPost]
-        [Route("AddUser")]
+
         public UserResponse AddUser(User user)
         {
             SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("UserManageCon").ToString());
@@ -71,8 +77,8 @@ namespace AMDT_Assessment.Controllers
             return response;
         }
         //Update User
+        [Authorize]
         [HttpPut]
-        [Route("UpdateUser")]
         public UserResponse UpdateUser(User user)
         {
             SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("UserManageCon").ToString());
@@ -82,8 +88,9 @@ namespace AMDT_Assessment.Controllers
             return response;
         }
         //Delete User
+        [Authorize]
         [HttpDelete]
-        [Route("DeleteUser/{id}")]
+        [Route("{id}")]
         public UserResponse DeleteUser(int id)
         {
             SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("UserManageCon").ToString());

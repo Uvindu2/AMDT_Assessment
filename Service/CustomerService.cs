@@ -54,7 +54,7 @@ namespace AMDT_Assessment.Service
         public CustomerResponse GetCustomerById(SqlConnection connection, int id)
         {
             CustomerResponse response = new CustomerResponse();
-            SqlDataAdapter da = new SqlDataAdapter("Select * from Customer where RoleID='" + id + "'", connection);
+            SqlDataAdapter da = new SqlDataAdapter("Select * from Customer where id='" + id + "'", connection);
             DataTable dt = new DataTable();
             Customer Customers = new Customer();
             da.Fill(dt);

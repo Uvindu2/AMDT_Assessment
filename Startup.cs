@@ -20,6 +20,8 @@ namespace MemberJWTDemo
 {
     public class Startup
     {
+
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -32,6 +34,17 @@ namespace MemberJWTDemo
         {
 
             services.AddControllers();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", builder =>
+
+                    builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+                
+
+            });
+          
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AMDT_Assessment", Version = "v1" });
@@ -66,6 +79,7 @@ namespace MemberJWTDemo
             }
 
             app.UseHttpsRedirection();
+            app.UseCors("AllowAll");
 
             app.UseRouting();
 
@@ -76,6 +90,7 @@ namespace MemberJWTDemo
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+          
             });
         }
     }

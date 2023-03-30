@@ -2,13 +2,16 @@
 using AMDT_Assessment.Response;
 using AMDT_Assessment.Service;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
 using WebApplication1.Models;
 
+
 namespace AMDT_Assessment.Controllers
 {
+   
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
@@ -26,7 +29,7 @@ namespace AMDT_Assessment.Controllers
 
         //Get All Role Types
         [HttpGet]
-        [Route("GetAllProducts")]
+        
         public ProductResponse GetAllProducts()
         {
             SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("UserManageCon").ToString());
@@ -37,7 +40,7 @@ namespace AMDT_Assessment.Controllers
         }
         //Get Role Type By Id
         [HttpGet]
-        [Route("GetProductById/{id}")]
+        [Route("{id}")]
         public ProductResponse GetProductById(int id)
         {
             SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("UserManageCon").ToString());
@@ -48,7 +51,7 @@ namespace AMDT_Assessment.Controllers
         }
         //Add Role Type
         [HttpPost]
-        [Route("AddProduct")]
+        
         public ProductResponse AddProduct(Product product)
         {
             SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("UserManageCon").ToString());
@@ -60,7 +63,7 @@ namespace AMDT_Assessment.Controllers
 
         //Update Role Type
         [HttpPut]
-        [Route("UpdateProduct")]
+    
         public ProductResponse UpdateProduct(Product product)
         {
             SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("UserManageCon").ToString());
@@ -72,7 +75,7 @@ namespace AMDT_Assessment.Controllers
 
         //Delete Role Type
         [HttpDelete]
-        [Route("DeleteProduct/{id}")]
+        [Route("{id}")]
         public ProductResponse DeleteProduct(int id)
         {
             SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("UserManageCon").ToString());

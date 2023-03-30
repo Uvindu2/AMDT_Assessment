@@ -24,6 +24,7 @@ namespace AMDT_Assessment.Service
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
                     Product product = new Product();
+                    product.id = Convert.ToInt32(dt.Rows[i]["id"]);
                     product.productName = Convert.ToString(dt.Rows[i]["productName"]);
                     product.prodctCategory = Convert.ToString(dt.Rows[i]["prodctCategory"]);
                     product.quantity = Convert.ToInt32(dt.Rows[i]["quantity"]);
@@ -55,7 +56,7 @@ namespace AMDT_Assessment.Service
         public ProductResponse GetProductById(SqlConnection connection, int id)
         {
             ProductResponse response = new ProductResponse();
-            SqlDataAdapter da = new SqlDataAdapter("Select * from Product where RoleID='" + id + "'", connection);
+            SqlDataAdapter da = new SqlDataAdapter("Select * from Product where id='" + id + "'", connection);
             DataTable dt = new DataTable();
             Product Products = new Product();
             da.Fill(dt);
@@ -66,7 +67,7 @@ namespace AMDT_Assessment.Service
 
                 product.productName = dt.Rows[0]["productName"].ToString();
                 product.prodctCategory = dt.Rows[0]["prodctCategory"].ToString();
-                product.id = Convert.ToInt32(dt.Rows[0]["Id"]);
+                product.id = Convert.ToInt32(dt.Rows[0]["id"]);
                 product.quantity = Convert.ToInt32(dt.Rows[0]["quantity"]);
                 product.unitPrice = Convert.ToDecimal(dt.Rows[0]["unitPrice"]);
                 product.description = dt.Rows[0]["description"].ToString();
